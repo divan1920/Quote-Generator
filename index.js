@@ -16,17 +16,15 @@ function getQuote() {
       document.getElementById("quote").innerHTML =
         '"' +
         data[num[0] % 100].en +
-        '"' +
-        "\n" +
-        "-" +
-        data[num[0] % 100].author;
+        '"';
+      document.getElementById("author").innerHTML = "-"+ data[num[0] % 100].author;
       document.getElementById("quote").value = "en"; //setting quotes language
     })
     .catch((error) => console.error("FETCH ERROR:", error));
 }
 
 //Converting div to image and downloading it using html2canvas
-
+// I have included new version js file of html2canvas because this syntex was not working 
 document.getElementById("generate").addEventListener("click", getQuote);
 console.log(document.getElementById("btndownload").innerHTML);
 document.getElementById("btndownload").addEventListener("click", function () {
@@ -45,7 +43,7 @@ document.getElementById("btndownload").addEventListener("click", function () {
 const translateBtn = document.getElementById("togglelang");
 
 translateBtn.addEventListener("click", () => {
-  let text = document.getElementById("quote").innerText,
+  let text = document.getElementById("quote").innerHTML,
     translateFrom = document.getElementById("quote").value,
     translateTo;
   console.log(document.getElementById("quote").value);
@@ -56,6 +54,7 @@ translateBtn.addEventListener("click", () => {
   fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => {
+      console.log(data.responseData);
       document.getElementById("quote").innerText =
         data.responseData.translatedText;
       document.getElementById("quote").value = translateTo;
